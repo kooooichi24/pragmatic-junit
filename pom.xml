@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>pragmatic-junit1</artifactId>
+  <artifactId>pragmatic-junit</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>pragmatic-junit1</name>
+  <name>pragmatic-junit</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
