@@ -1,14 +1,9 @@
 package iloveyouboss6;
 
-import iloveyouboss7.Answer;
-import iloveyouboss7.Criteria;
-import iloveyouboss7.Criterion;
-import iloveyouboss7.Weight;
-
 import java.util.*;
 
 public class Profile { 
-   private Map<String, iloveyouboss7.Answer> answers = new HashMap<>();
+   private Map<String, Answer> answers = new HashMap<>();
    private int score;
    private String name;
 
@@ -20,7 +15,7 @@ public class Profile {
       return name;
    }
 
-   public void add(iloveyouboss7.Answer answer) {
+   public void add(Answer answer) {
       answers.put(answer.getQuestionText(), answer);
    }
    
@@ -33,7 +28,7 @@ public class Profile {
          Answer answer = answers.get(
                criterion.getAnswer().getQuestionText()); 
          boolean match = 
-               criterion.getWeight() == iloveyouboss7.Weight.DontCare ||
+               criterion.getWeight() == Weight.DontCare ||
                answer.match(criterion.getAnswer());
 
          if (!match && criterion.getWeight() == Weight.MustMatch) {

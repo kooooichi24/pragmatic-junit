@@ -1,7 +1,5 @@
 package iloveyouboss6;
 
-import iloveyouboss7.Question;
-
 public class PercentileQuestion extends Question {
    public PercentileQuestion(int id, String text, String[] answerChoices) {
       super(id, text, answerChoices);

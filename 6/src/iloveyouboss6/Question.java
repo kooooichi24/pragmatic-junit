@@ -1,7 +1,5 @@
 package iloveyouboss6;
 
-import iloveyouboss7.Answer;
-
 public abstract class Question {
    private String text;
    private String[] answerChoices;
