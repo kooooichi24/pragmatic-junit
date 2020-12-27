@@ -25,4 +25,25 @@ public class ProfileTest {
         // assert
         assertFalse(matches);
     }
+
+    // 不問の条件があればmatchesはtrueを返す
+    @Test
+    public void matchAnswersTrueForAnyDontCareCriteria() {
+
+        // arrange
+        Profile profile = new Profile("Bull Hockey, Inc.");
+        Question question = new BooleanQuestion(1, "牛乳は支給されますか?");
+        Answer profileAnswer = new Answer(question, Bool.FALSE);
+        profile.add(profileAnswer);
+        Criteria criteria = new Criteria();
+        Answer criteriaAnswer = new Answer(question, Bool.TRUE);
+        Criterion criterion = new Criterion(criteriaAnswer, Weight.DontCare);
+        criteria.add(criterion);
+
+        // act
+        boolean matches = profile.matches(criteria);
+
+        // assert
+        assertTrue(matches);
+    }
 }
