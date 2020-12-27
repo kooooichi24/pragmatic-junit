@@ -1,23 +1,31 @@
 package iloveyouboss7;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class ProfileTest {
+
+    private Profile profile;
+    private Question question;
+    private Criteria criteria;
+
+    @Before
+    public void create() {
+        profile = new Profile("Bull Hockey, Inc.");
+        question = new BooleanQuestion(1, "ボーナスは支給されますか?");
+        criteria = new Criteria();
+    }
 
     // 必須の条件にマッチしない場合、matchesはfalseを返す
     @Test
     public void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
 
         // arrange
-        Profile profile = new Profile("Bull Hockey, Inc.");
-        Question question = new BooleanQuestion(1, "ボーナスは支給されますか?");
-        Answer profileAnswer = new Answer(question, Bool.FALSE);
-        profile.add(profileAnswer);
-        Criteria criteria = new Criteria();
-        Answer criteriaAnswer = new Answer(question, Bool.TRUE);
-        Criterion criterion = new Criterion(criteriaAnswer, Weight.MustMatch);
-        criteria.add(criterion);
+        profile.add(new Answer(question, Bool.FALSE));
+        criteria.add(
+                new Criterion(new Answer(question, Bool.TRUE), Weight.MustMatch));
 
         // act
         boolean matches = profile.matches(criteria);
@@ -31,14 +39,9 @@ public class ProfileTest {
     public void matchAnswersTrueForAnyDontCareCriteria() {
 
         // arrange
-        Profile profile = new Profile("Bull Hockey, Inc.");
-        Question question = new BooleanQuestion(1, "牛乳は支給されますか?");
-        Answer profileAnswer = new Answer(question, Bool.FALSE);
-        profile.add(profileAnswer);
-        Criteria criteria = new Criteria();
-        Answer criteriaAnswer = new Answer(question, Bool.TRUE);
-        Criterion criterion = new Criterion(criteriaAnswer, Weight.DontCare);
-        criteria.add(criterion);
+        profile.add(new Answer(question, Bool.FALSE));
+        criteria.add(
+                new Criterion(new Answer(question, Bool.TRUE), Weight.DontCare));
 
         // act
         boolean matches = profile.matches(criteria);
