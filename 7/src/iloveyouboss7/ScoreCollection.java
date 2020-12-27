@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreCollection {
-   private List<iloveyouboss7.Scoreable> scores = new ArrayList<>();
+   private List<Scoreable> scores = new ArrayList<>();
    
-   public void add(iloveyouboss7.Scoreable scoreable) {
+   public void add(Scoreable scoreable) {
       scores.add(scoreable);
    }
    

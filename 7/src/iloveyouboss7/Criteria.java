@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class Criteria implements Iterable<iloveyouboss7.Criterion> {
+public class Criteria implements Iterable<Criterion> {
 
-   private List<iloveyouboss7.Criterion> criteria = new ArrayList<>();
+   private List<Criterion> criteria = new ArrayList<>();
 
-   public void add(iloveyouboss7.Criterion criterion) {
+   public void add(Criterion criterion) {
       criteria.add(criterion);
    }
 

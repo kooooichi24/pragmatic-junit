@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Profile { 
-   private Map<String, iloveyouboss7.Answer> answers = new HashMap<>();
+   private Map<String, Answer> answers = new HashMap<>();
    private int score;
    private String name;
 
@@ -16,7 +16,7 @@ public class Profile {
       return name;
    }
 
-   public void add(iloveyouboss7.Answer answer) {
+   public void add(Answer answer) {
       answers.put(answer.getQuestionText(), answer);
    }
    
@@ -29,7 +29,7 @@ public class Profile {
          Answer answer = answers.get(
                criterion.getAnswer().getQuestionText()); 
          boolean match = 
-               criterion.getWeight() == iloveyouboss7.Weight.DontCare ||
+               criterion.getWeight() == Weight.DontCare ||
                answer.match(criterion.getAnswer());
 
          if (!match && criterion.getWeight() == Weight.MustMatch) {

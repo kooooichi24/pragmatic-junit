@@ -1,11 +1,11 @@
 package iloveyouboss7;
 
 public class Criterion implements Scoreable {
-   private iloveyouboss7.Weight weight;
-   private iloveyouboss7.Answer answer;
+   private Weight weight;
+   private Answer answer;
    private int score;
 
-   public Criterion(iloveyouboss7.Answer answer, iloveyouboss7.Weight weight) {
+   public Criterion(Answer answer, Weight weight) {
       this.answer = answer;
       this.weight = weight;
    }

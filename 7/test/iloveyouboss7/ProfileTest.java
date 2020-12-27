@@ -1,12 +1,13 @@
 package iloveyouboss7;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ProfileTest {
 
     // 必須の条件にマッチしない場合、matchesはfalseを返す
     @Test
-    public void test() {
+    public void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
 
         // arrange
         Profile profile = new Profile("Bull Hockey, Inc.");
@@ -19,7 +20,9 @@ public class ProfileTest {
         criteria.add(criterion);
 
         // act
+        boolean matches = profile.matches(criteria);
 
         // assert
+        assertFalse(matches);
     }
 }

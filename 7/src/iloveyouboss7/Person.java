@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Person {
-   private List<iloveyouboss7.Question> characteristics = new ArrayList<>();
+   private List<Question> characteristics = new ArrayList<>();
 
-   public void add(iloveyouboss7.Question characteristic) {
+   public void add(Question characteristic) {
       characteristics.add(characteristic);
    }
 
-   public List<iloveyouboss7.Question> getCharacteristics() {
+   public List<Question> getCharacteristics() {
       return characteristics;
    }
 

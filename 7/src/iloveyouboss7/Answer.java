@@ -2,14 +2,14 @@ package iloveyouboss7;
 
 public class Answer {
    private int i;
-   private iloveyouboss7.Question question;
+   private Question question;
 
-   public Answer(iloveyouboss7.Question question, int i) {
+   public Answer(Question question, int i) {
       this.question = question;
       this.i = i;
    }
 
-   public Answer(iloveyouboss7.Question characteristic, String matchingValue) {
+   public Answer(Question characteristic, String matchingValue) {
       this.question = characteristic;
       this.i = characteristic.indexOf(matchingValue);
    }
