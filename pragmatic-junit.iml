@@ -20,6 +20,8 @@
       <sourceFolder url="file://$MODULE_DIR$/6/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/7/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/7/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/16-branch-persistence/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/16-branch-persistence/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -28,5 +30,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-all:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-library:1.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.persistence:javax.persistence-api:2.2" level="project" />
   </component>
 </module>
