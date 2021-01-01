@@ -167,4 +167,10 @@ public class AssertTest {
     public void deleteForReadsFromTestFile() {
         new File("test.txt").delete();
     }
+
+    @Test
+    @Ignore("でも忘れないで!")
+    public void somethingWeCannotHandleRightNow() {
+        // ...
+    }
 }
