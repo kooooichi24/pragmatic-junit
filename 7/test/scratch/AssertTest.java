@@ -9,7 +9,7 @@ import org.junit.rules.*;
 
 public class AssertTest {
 
-    class InsufficientFundsException extends RuntimeException {
+    static class InsufficientFundsException extends RuntimeException {
 
         public InsufficientFundsException(String message) {
             super(message);
@@ -18,7 +18,7 @@ public class AssertTest {
         private static final long serialVersionUID = 1L;
     }
 
-    class Account {
+    static class Account {
 
         int balance;
         String name;
@@ -80,14 +80,14 @@ public class AssertTest {
     }
 
     @Test
-//    @ExpectToFail
+    @ExpectToFail
     @Ignore
     public void assertFailure() {
         assertTrue(account.getName().startsWith("xyz"));
     }
 
     @Test
-//    @ExpectToFail
+    @ExpectToFail
     @Ignore
     public void matchesFailure() {
         assertThat(account.getName(), startsWith("xyz"));
