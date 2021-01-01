@@ -33,7 +33,7 @@ public class AssertTest {
 
         void withdraw(int dollars) {
             if (balance < dollars) {
-                throw new InsufficientFundsException("balance only " + balance);
+                throw new InsufficientFundsException("残高不足です");
             }
             balance -= dollars;
         }
@@ -100,4 +100,45 @@ public class AssertTest {
         assertThat("口座の残高は100です", account.getBalance(), equalTo(50));
     }
 
+    // 残高以上の出金は例外を発生させる
+    @Test(expected = InsufficientFundsException.class)
+    public void throwsWhenWithdrawingTooMuch() {
+        account.withdraw(100);
+    }
+
+    @Test
+    public void throwsWhenWithdrawingTooMuchTry() {
+        try {
+            account.withdraw(100);
+            fail();
+        }
+        catch (InsufficientFundsException expected) {
+            assertThat(expected.getMessage(), equalTo("残高不足です"));
+        }
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void exceptionRule() {
+        thrown.expect(InsufficientFundsException.class);
+        thrown.expectMessage("残高不足です");
+
+        account.withdraw(100);
+    }
+
+    @Test
+    public void readsFromTestFile() throws  IOException {
+        String filename = "test.txt";
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        writer.write("test data");
+        writer.close();
+        // ...
+    }
+
+    @After
+    public void deleteForReadsFromTestFile() {
+        new File("test.txt").delete();
+    }
 }
