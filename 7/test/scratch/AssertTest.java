@@ -82,6 +82,32 @@ public class AssertTest {
     @Test
     @ExpectToFail
     @Ignore
+    public void comparesArraysFailing() {
+        assertThat(new String[] {"a", "b", "c"}, equalTo(new String[] {"a", "b"}));
+    }
+
+    @Test
+    @ExpectToFail
+    @Ignore
+    public void comparesCollectionsFailing() {
+        assertThat(Arrays.asList(new String[] {"a"}),
+                equalTo(Arrays.asList(new String[] {"a", "ab"})));
+    }
+
+    @Test
+    public void comparesArraysPassing() {
+        assertThat(new String[] {"a", "b"}, equalTo(new String[] {"a", "b"}));
+    }
+
+    @Test
+    public void comparesCollectionsPassing() {
+        assertThat(Arrays.asList(new String[] {"a"}),
+                equalTo(Arrays.asList(new String[] {"a"})));
+    }
+
+    @Test
+    @ExpectToFail
+    @Ignore
     public void assertFailure() {
         assertTrue(account.getName().startsWith("xyz"));
     }
