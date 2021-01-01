@@ -93,4 +93,11 @@ public class AssertTest {
         assertThat(account.getName(), startsWith("xyz"));
     }
 
+    @Test
+    @Ignore
+    public void testWithWorthlessAssertionComment() {
+        account.deposit(50);
+        assertThat("口座の残高は100です", account.getBalance(), equalTo(50));
+    }
+
 }
