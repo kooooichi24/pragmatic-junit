@@ -1,7 +1,9 @@
 package iloveyouboss7;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 public class Profile { 
    private Map<String, Answer> answers = new HashMap<>();
@@ -47,5 +49,11 @@ public class Profile {
 
    public int score() {
       return score;
+   }
+
+   public List<Answer> find(Predicate<Answer> pred) {
+      return answers.values().stream()
+              .filter(pred)
+              .collect(Collectors.toList());
    }
 }
