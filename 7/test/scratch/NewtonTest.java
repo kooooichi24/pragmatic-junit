@@ -24,4 +24,10 @@ public class NewtonTest {
 
         assertThat(result * result, closeTo(250.0, Newton.TOLERANCE));
     }
+
+    @Test
+    public void squareRootVerifiedUsingLibrary() {
+        assertThat(Newton.squareRoot(1969.0),
+                closeTo(Math.sqrt(1969.0), Newton.TOLERANCE));
+    }
 }
