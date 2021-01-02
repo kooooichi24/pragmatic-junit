@@ -1,0 +1,11 @@
+version: '2.0'
+
+services:
+  db:
+    image: postgres:9.6.7-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: iloveyouboss16bp
+    ports:
+      - '5433:5432'
