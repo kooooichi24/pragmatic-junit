@@ -33,22 +33,31 @@ public class Profile {
    }
    
    public boolean matches(Criteria criteria) {
-      score = 0;
-      
-      boolean kill = false;
+      calculateScore(criteria);
+      if (doesNotMeetAnyMustMatchCriterion(criteria)) {
+         return false;
+      }
+      return anyMatches(criteria);
+   }
+
+   private boolean doesNotMeetAnyMustMatchCriterion(Criteria criteria) {
       for (Criterion criterion: criteria) {
          boolean match = criterion.matches(answerMatching(criterion));
 
          if (!match && criterion.getWeight() == Weight.MustMatch) {
-            kill = true;
+            return true;
          }
-         if (match) {
+      }
+      return false;
+   }
+
+   private void calculateScore(Criteria criteria) {
+      score = 0;
+      for (Criterion criterion: criteria) {
+         if (criterion.matches(answerMatching(criterion))) {
             score += criterion.getWeight().getValue();
          }
       }
-      if (kill)
-         return false;
-      return anyMatches(criteria);
    }
 
    private boolean anyMatches(Criteria criteria) {
