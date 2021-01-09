@@ -32,10 +32,8 @@ public class Profile {
       answers.put(answer.getQuestionText(), answer);
    }
    
-   public boolean matches(Criteria criteria) {
-      MatchSet matchSet = new MatchSet(answers, criteria);
-      score = matchSet.getScore();
-      return matchSet.matches();
+   public MatchSet matches(Criteria criteria) {
+      return new MatchSet(answers, criteria);
    }
 
    public int score() {
