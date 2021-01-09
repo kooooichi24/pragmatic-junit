@@ -13,34 +13,28 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class Profile {
-
-   private Map<String,Answer> answers = new HashMap<>();
+   private AnswerCollection answers = new AnswerCollection();
    private String name;
 
    public Profile(String name) {
       this.name = name;
    }
-   
+
    public String getName() {
       return name;
    }
 
    public void add(Answer answer) {
-      answers.put(answer.getQuestionText(), answer);
-   }
-   
-   public MatchSet matches(Criteria criteria) {
-      return new MatchSet(answers, criteria);
-   }
-   
-   @Override
-   public String toString() {
-     return name;
+      answers.add(answer);
    }
 
-   public List<Answer> find(Predicate<Answer> pred) {
-      return answers.values().stream()
-            .filter(pred)
-            .collect(Collectors.toList());
+   public MatchSet getMatchSet(Criteria criteria) {
+      return new MatchSet(answers, criteria);
+   }
+   // ...
+
+   @Override
+   public String toString() {
+      return name;
    }
 }

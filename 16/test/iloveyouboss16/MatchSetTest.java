@@ -2,9 +2,6 @@ package iloveyouboss16;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.*;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -23,11 +20,11 @@ public class MatchSetTest {
     private Answer answerNoOnsiteDaycare;
     private Answer answerHasOnsiteDaycare;
 
-    private Map<String, Answer> answers;
+    private AnswerCollection answers;
 
     @Before
     public void createAnswers() {
-        answers = new HashMap<>();
+        answers = new AnswerCollection();
     }
 
     @Before
@@ -59,10 +56,6 @@ public class MatchSetTest {
                 new Answer(questionOnsiteDaycare, Bool.FALSE);
     }
 
-    private void add(Answer answer) {
-        answers.put(answer.getQuestionText(), answer);
-    }
-
     private MatchSet createMatchSet() {
         return new MatchSet(answers, criteria);
     }
@@ -70,7 +63,7 @@ public class MatchSetTest {
     // 必須の条件にマッチしない場合、matchesはfalseを返す
     @Test
     public void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
-        add(answerDoesNotReimburseTuition);
+        answers.add(answerDoesNotReimburseTuition);
         criteria.add(
                 new Criterion(answerReimbursesTuition, Weight.MustMatch));
 
@@ -80,7 +73,7 @@ public class MatchSetTest {
     // 不問の条件があればmatchesはtrueを返す
     @Test
     public void matchAnswersTrueForAnyDontCareCriteria() {
-        add(answerDoesNotReimburseTuition);
+        answers.add(answerDoesNotReimburseTuition);
         criteria.add(
                 new Criterion(answerReimbursesTuition, Weight.DontCare));
 
@@ -89,27 +82,27 @@ public class MatchSetTest {
 
     @Test
     public void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
-       add(answerThereIsRelocation);
-       add(answerDoesNotReimburseTuition);
-       criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
-       criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
+        answers.add(answerThereIsRelocation);
+        answers.add(answerDoesNotReimburseTuition);
+        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
+        criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
 
        assertTrue(createMatchSet().matches());
     }
 
     @Test
     public void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
-       add(answerThereIsNoRelocation);
-       add(answerDoesNotReimburseTuition);
-       criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
-       criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
+        answers.add(answerThereIsNoRelocation);
+        answers.add(answerDoesNotReimburseTuition);
+        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
+        criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
 
-       assertFalse(createMatchSet().matches());
+        assertFalse(createMatchSet().matches());
     }
 
     @Test
     public void scoreIsZeroWhenThereAreNoMatches() {
-        add(answerThereIsNoRelocation);
+        answers.add(answerThereIsNoRelocation);
         criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
 
         assertThat(createMatchSet().getScore(), equalTo(0));
@@ -117,7 +110,7 @@ public class MatchSetTest {
 
     @Test
     public void scoreIsCriterionValueForSingleMatch() {
-        add(answerThereIsRelocation);
+        answers.add(answerThereIsRelocation);
         criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
 
         assertThat(createMatchSet().getScore(), equalTo(Weight.Important.getValue()));
@@ -125,9 +118,9 @@ public class MatchSetTest {
 
     @Test
     public void scoreAccumulatesCriterionValuesForMatches() {
-        add(answerThereIsRelocation);
-        add(answerReimbursesTuition);
-        add(answerNoOnsiteDaycare);
+        answers.add(answerThereIsRelocation);
+        answers.add(answerReimbursesTuition);
+        answers.add(answerNoOnsiteDaycare);
         criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
         criteria.add(new Criterion(answerReimbursesTuition, Weight.WouldPrefer));
         criteria.add(new Criterion(answerHasOnsiteDaycare, Weight.VeryImportant));
