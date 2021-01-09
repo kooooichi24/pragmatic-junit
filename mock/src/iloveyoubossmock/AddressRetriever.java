@@ -14,15 +14,11 @@ import org.json.simple.parser.*;
 import utilmock.*;
 
 public class AddressRetriever {
-   private Http http;
-
-   public AddressRetriever(Http http) {
-      this.http = http;
-   }
+   private Http http = new HttpImpl();
 
    public Address retrieve(double latitude, double longitude)
          throws IOException, ParseException {
-      String parms = String.format("lat=%.6flon=%.6f", latitude, longitude);
+      String parms = String.format("lat=%.6f&lon=%.6f", latitude, longitude);
 //      String response = new HttpImpl().get(
 //        "http://open.mapquestapi.com/nominatim/v1/reverse?format=json&"
 //        + parms);
