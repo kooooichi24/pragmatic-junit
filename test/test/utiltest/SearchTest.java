@@ -32,7 +32,7 @@ public class SearchTest {
 
         byte[] bytes = pageContent.getBytes();
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
-        // search
+        // 検索
         Search search = new Search(stream, "practical joke", "1");
         Search.LOGGER.setLevel(Level.OFF);
         search.setSurroundingCharacterCount(10);
@@ -46,7 +46,7 @@ public class SearchTest {
                 equalTo("or a vast practical joke, though t"));
         stream.close();
 
-        // negative
+        // 否定
         URLConnection connection =
                 new URL("http://bit.ly/15sYPA7").openConnection();
         InputStream inputStream = connection.getInputStream();
