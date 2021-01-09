@@ -15,9 +15,6 @@ import java.util.stream.*;
 public class Profile {
 
    private Map<String,Answer> answers = new HashMap<>();
-   // ...
-
-   private int score;
    private String name;
 
    public Profile(String name) {
@@ -34,10 +31,6 @@ public class Profile {
    
    public MatchSet matches(Criteria criteria) {
       return new MatchSet(answers, criteria);
-   }
-
-   public int score() {
-      return score;
    }
    
    @Override
