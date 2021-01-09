@@ -14,15 +14,19 @@ public class AddressRetrieverTest {
     public void answersAppropriateAddressForValidCoordinates()
             throws IOException, ParseException {
 
-        Http http = (String url) ->
-                "{\"address\":{"
-                + "\"house_number\":\"324\","
-                + "\"road\":\"North Tejon Street\","
-                + "\"city\":\"Colorado Springs\","
-                + "\"state\":\"Colorado\","
-                + "\"postcode\":\"80903\","
-                + "\"country_code\":\"us\"}"
-                + "}";
+        Http http = (String url) -> {
+            if (url.contains("lat=38.000000&lon=-104.000000")) {
+                fail("URL " + url + " に正しいパラメーターが含まれていません");
+            }
+            return "{\"address\":{"
+                    + "\"house_number\":\"324\","
+                    + "\"road\":\"North Tejon Street\","
+                    + "\"city\":\"Colorado Springs\","
+                    + "\"state\":\"Colorado\","
+                    + "\"postcode\":\"80903\","
+                    + "\"country_code\":\"us\"}"
+                    + "}";
+        };
         AddressRetriever retriever = new AddressRetriever(http);
 
         Address address = retriever.retrieve(38.0, -104.0);
