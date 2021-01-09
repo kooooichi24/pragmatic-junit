@@ -19,6 +19,7 @@ import org.junit.*;
 import java.util.logging.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static utiltest.ContainsMatches.*;
 
 public class SearchTest {
     @Test
@@ -38,12 +39,9 @@ public class SearchTest {
         search.setSurroundingCharacterCount(10);
         search.execute();
         assertFalse(search.errored());
-        List<Match> matches = search.getMatches();
-        assertTrue(matches.size() >= 1);
-        Match match = matches.get(0);
-        assertThat(match.searchString, equalTo("practical joke"));
-        assertThat(match.surroundingContext,
-                equalTo("or a vast practical joke, though t"));
+        assertThat(search.getMatches(), containsMatches(new Match[] {
+                new Match("1", "practical joke", "or a vast practical joke, though t")
+        }));
         stream.close();
 
         // 否定
@@ -52,7 +50,7 @@ public class SearchTest {
         InputStream inputStream = connection.getInputStream();
         search = new Search(inputStream, "smelt", "http://bit.ly/15sYPA7");
         search.execute();
-        assertThat(search.getMatches().size(), equalTo(0));
+        assertTrue(search.getMatches().isEmpty());
         stream.close();
    }
 }
