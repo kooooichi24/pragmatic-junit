@@ -33,51 +33,13 @@ public class Profile {
    }
    
    public boolean matches(Criteria criteria) {
-      calculateScore(criteria);
-      if (doesNotMeetAnyMustMatchCriterion(criteria)) {
-         return false;
-      }
-      return anyMatches(criteria);
-   }
-
-   private boolean doesNotMeetAnyMustMatchCriterion(Criteria criteria) {
-      for (Criterion criterion: criteria) {
-         boolean match = criterion.matches(answerMatching(criterion));
-
-         if (!match && criterion.getWeight() == Weight.MustMatch) {
-            return true;
-         }
-      }
-      return false;
-   }
-
-   private void calculateScore(Criteria criteria) {
-      score = 0;
-      for (Criterion criterion: criteria) {
-         if (criterion.matches(answerMatching(criterion))) {
-            score += criterion.getWeight().getValue();
-         }
-      }
-   }
-
-   private boolean anyMatches(Criteria criteria) {
-      boolean anyMatches = false;
-      for (Criterion criterion: criteria) {
-         anyMatches |= criterion.matches(answerMatching(criterion));
-      }
-      return anyMatches;
+      MatchSet matchSet = new MatchSet(answers, criteria);
+      score = matchSet.getScore();
+      return matchSet.matches();
    }
 
    public int score() {
       return score;
-   }
-
-   public List<Answer> classicFind(Predicate<Answer> pred) {
-      List<Answer> results = new ArrayList<Answer>();
-      for (Answer answer: answers.values())
-         if (pred.test(answer))
-            results.add(answer);
-      return results;
    }
    
    @Override
@@ -89,9 +51,5 @@ public class Profile {
       return answers.values().stream()
             .filter(pred)
             .collect(Collectors.toList());
-   }
-
-   private Answer answerMatching(Criterion criterion) {
-      return answers.get(criterion.getAnswer().getQuestionText());
    }
 }
