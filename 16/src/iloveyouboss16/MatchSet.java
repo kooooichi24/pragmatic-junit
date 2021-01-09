@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MatchSet {
-    private Map<String,Answer> answers = new HashMap<>();
+    private Map<String,Answer> answers;
     private int score = 0;
     private Criteria criteria;
 
