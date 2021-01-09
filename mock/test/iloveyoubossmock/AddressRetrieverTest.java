@@ -1,8 +1,9 @@
 package iloveyoubossmock;
 
 
-import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.io.IOException;
 import org.json.simple.parser.*;
 import org.junit.Test;
@@ -14,19 +15,16 @@ public class AddressRetrieverTest {
     public void answersAppropriateAddressForValidCoordinates()
             throws IOException, ParseException {
 
-        Http http = (String url) -> {
-            if (url.contains("lat=38.000000&lon=-104.000000")) {
-                fail("URL " + url + " に正しいパラメーターが含まれていません");
-            }
-            return "{\"address\":{"
-                    + "\"house_number\":\"324\","
-                    + "\"road\":\"North Tejon Street\","
-                    + "\"city\":\"Colorado Springs\","
-                    + "\"state\":\"Colorado\","
-                    + "\"postcode\":\"80903\","
-                    + "\"country_code\":\"us\"}"
-                    + "}";
-        };
+        Http http = mock(Http.class);
+        when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
+                "{\"address\":{"
+                + "\"house_number\":\"324\","
+                + "\"road\":\"North Tejon Street\","
+                + "\"city\":\"Colorado Springs\","
+                + "\"state\":\"Colorado\","
+                + "\"postcode\":\"80903\","
+                + "\"country_code\":\"us\"}"
+                + "}");
         AddressRetriever retriever = new AddressRetriever(http);
 
         Address address = retriever.retrieve(38.0, -104.0);
