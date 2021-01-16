@@ -24,8 +24,10 @@ import static utiltest.ContainsMatches.*;
 public class SearchTest {
     private static final String A_TITLE = "1";
 
+    // コンテンツ中の文字列を検索し、コンテキストを含む結果を返す
     @Test
-    public void testSearch() throws IOException {
+    public void returnsMatchesShowingContextWhenSearchStringInContext()
+            throws IOException {
 
         InputStream stream =
                 streamOn("There are certain queer times and occasions "
@@ -35,25 +37,29 @@ public class SearchTest {
                         + "than suspects that the joke is at nobody's expense but "
                         + "his own.");
 
-        // 検索
         Search search = new Search(stream, "practical joke", A_TITLE);
         Search.LOGGER.setLevel(Level.OFF);
         search.setSurroundingCharacterCount(10);
         search.execute();
         assertFalse(search.errored());
-        assertThat(search.getMatches(), containsMatches(new Match[] {
+        assertThat(search.getMatches(), containsMatches(new Match[]{
                 new Match(A_TITLE, "practical joke", "or a vast practical joke, though t")
         }));
         stream.close();
+    }
 
-        // 否定
+    // コンテンツ中に文字列がない場合、空の結果を返す
+    @Test
+    public void noMatchesReturnedWhenSearchStringNotInContent()
+            throws MalformedURLException, IOException {
+
         URLConnection connection =
                 new URL("http://bit.ly/15sYPA7").openConnection();
         InputStream inputStream = connection.getInputStream();
-        search = new Search(inputStream, "smelt", A_TITLE);
+        Search search = new Search(inputStream, "smelt", A_TITLE);
         search.execute();
         assertTrue(search.getMatches().isEmpty());
-        stream.close();
+        inputStream.close();
    }
 
    private InputStream streamOn(String pageContent) {
