@@ -37,41 +37,68 @@ public class SearchTest {
 
     // コンテンツ中の文字列を検索し、コンテキストを含む結果を返す
     @Test
-    public void returnsMatchesShowingContextWhenSearchStringInContext()
-            throws IOException {
+    public void returnsMatchesShowingContextWhenSearchStringInContext() {
 
-        stream = streamOn("There are certain queer times and occasions "
-                        + "in this strange mixed affair we call life when a man "
-                        + "takes this whole universe for a vast practical joke, "
-                        + "though the wit thereof he but dimly discerns, and more "
-                        + "than suspects that the joke is at nobody's expense but "
-                        + "his own.");
-        Search search = new Search(stream, "practical joke", A_TITLE);
+        stream = streamOn("rest of text here"
+                        + "1234567890search term1234567890"
+                        + "more rest of text");
+        Search search = new Search(stream, "search term", A_TITLE);
         search.setSurroundingCharacterCount(10);
 
         search.execute();
 
         assertThat(search.getMatches(), containsMatches(new Match[]{
-                new Match(A_TITLE, "practical joke", "or a vast practical joke, though t")
+                new Match(A_TITLE, "search term", "1234567890search term1234567890")
         }));
     }
 
     // コンテンツ中に文字列がない場合、空の結果を返す
     @Test
-    public void noMatchesReturnedWhenSearchStringNotInContent()
-            throws MalformedURLException, IOException {
+    public void noMatchesReturnedWhenSearchStringNotInContent() {
 
-        URLConnection connection =
-                new URL("http://bit.ly/15sYPA7").openConnection();
-        stream = connection.getInputStream();
-        Search search = new Search(stream, "smelt", A_TITLE);
+        stream = streamOn("any text");
+        Search search = new Search(stream, "text that doesn't match", A_TITLE);
 
         search.execute();
 
         assertTrue(search.getMatches().isEmpty());
    }
 
-   private InputStream streamOn(String pageContent) {
-        return new ByteArrayInputStream(pageContent.getBytes());
-   }
+   // ストリームから読み込めない場合にはerroredはtrueを返す
+    @Test
+    public void returnsErroredWhenUnableToReadStream() {
+
+        stream = createStreamThrowingErrorWhenRead();
+        Search search = new Search(stream, "", "");
+
+        search.execute();
+
+        assertTrue(search.errored());
+    }
+
+    // 読み込もうとするとエラーが発生するストリームを生成する
+    private InputStream createStreamThrowingErrorWhenRead() {
+        return new InputStream() {
+            @Override
+            public int read() throws IOException {
+                throw new IOException();
+            }
+        };
+    }
+
+    // 読み込みが成功するとerroredはfalseを返す
+    @Test
+    public void erroredReturnsFalseWhenReadSucceeds() {
+
+        stream = streamOn("");
+        Search search = new Search(stream, "", "");
+
+        search.execute();
+
+        assertFalse(search.errored());
+    }
+
+    private InputStream streamOn(String pageContent) {
+         return new ByteArrayInputStream(pageContent.getBytes());
+    }
 }
